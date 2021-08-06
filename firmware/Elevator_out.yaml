@@ -1,0 +1,96 @@
+esphome:
+  name: elevator_out
+  platform: ESP8266
+  board: esp01_1m
+  # esp8266_restore_from_flash: yes
+  # board_flash_mode: dout
+  
+substitutions:
+  ds18b20: GPIO12
+  button: GPIO4
+  led: GPIO14
+
+wifi:
+  # ssid: !secret wifi_ssid
+  # password: !secret wifi_passwd
+  reboot_timeout: 30min
+  # manual_ip:
+  #   static_ip: 192.168.1.10
+  #   gateway: 192.168.1.1
+  #   subnet: 255.255.255.0
+  networks:
+    - ssid: !secret wifi_ssid_3
+      password: !secret wifi_passwd_3
+      priority: 0
+    - ssid: CU_ecd7
+      password: a66cgcy5
+      priority: 1
+  ap:
+    ssid: !secret ap_ssid
+    password: !secret ap_password
+  use_address: 172.22.0.130
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret api_passwd
+  reboot_timeout: 8h
+
+ota:
+  safe_mode: True
+  password: !secret ota_passwd
+  port: 8266
+  
+# Example configuration entry
+web_server:
+  port: 80
+  auth:
+    username: !secret web_server_username
+    password: !secret web_server_password
+    
+################################################################################
+
+# ## MQTT服务器onenet
+# mqtt:
+#   broker: !secret one_broker
+#   port: !secret one_port
+#   username: !secret one_username
+#   password: !secret one_password
+#   topic_prefix: onenet
+#   # discovery_retain: false
+#   client_id: $client_id
+
+# Example configuration entry
+dallas:
+  - pin: $ds18b20
+
+# Individual sensors
+sensor:
+  - platform: dallas
+    address: 0x3D00000D6920BA28
+    name: "Chip_Temperature"
+    unit_of_measurement: °C
+
+switch:
+## 模拟电梯按键
+  - platform: gpio
+    name: "Call_elevator"
+    pin: $button
+    id: relay
+    on_turn_on:
+      - delay: 0.2s
+      - switch.turn_off: relay
+
+binary_sensor:
+## 电梯按键led反馈
+  - platform: gpio
+    pin:
+      number: $led
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Button_led"
+    id: led
