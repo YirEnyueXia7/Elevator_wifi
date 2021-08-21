@@ -1,0 +1,322 @@
+[
+    {
+        "id": "c2918b3e3e0ef6ae",
+        "type": "server-state-changed",
+        "z": "91e1adde.857a4",
+        "name": "电梯 binary",
+        "server": "514affc5.7205",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.call_elevator",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 800,
+        "y": 380,
+        "wires": [
+            [
+                "b58c13944a138bc2"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6b2a58dd09966a3d",
+        "type": "server-state-changed",
+        "z": "91e1adde.857a4",
+        "name": "电梯 led",
+        "server": "514affc5.7205",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.button_led",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 790,
+        "y": 560,
+        "wires": [
+            [
+                "65ded8854d68e5f1"
+            ]
+        ]
+    },
+    {
+        "id": "e332e4a9639f7ff7",
+        "type": "http request",
+        "z": "91e1adde.857a4",
+        "name": "电梯 relay",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://172.22.0.130/switch/call_elevator/turn_on",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "digest",
+        "x": 980,
+        "y": 380,
+        "wires": [
+            [
+                "50833ce60da03148"
+            ]
+        ]
+    },
+    {
+        "id": "50833ce60da03148",
+        "type": "debug",
+        "z": "91e1adde.857a4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b7de553b6ed989f0",
+        "type": "server-state-changed",
+        "z": "91e1adde.857a4",
+        "name": "电梯 relay",
+        "server": "514affc5.7205",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "switch.call_elevator",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 800,
+        "y": 500,
+        "wires": [
+            [
+                "25e02fe71bf0f741"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "25e02fe71bf0f741",
+        "type": "function",
+        "z": "91e1adde.857a4",
+        "name": "",
+        "func": "// 云控场景运行\nflow.set('elevator_relay', true)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "65ded8854d68e5f1",
+        "type": "function",
+        "z": "91e1adde.857a4",
+        "name": "",
+        "func": "msg.elevator_relay = flow.get('elevator_relay')\nif(msg.elevator_relay === true && msg.payload == 'on')\n{\n    // '电梯正在上行'\n    var msg1 = {}\n    // msg1.device = 'e754a5b5-4d6d-49a8-adc0-b1286ffdc0ac'\n    msg1.payload = '电梯正在上行，请准备出门'\n}\nelse if(msg.elevator_relay === true && msg.payload == 'off')\n{\n    // '电梯已到，叮'\n    flow.set('elevator_relay', false)\n    var msg2 = {}\n    // msg2.device = 'e754a5b5-4d6d-49a8-adc0-b1286ffdc0ac'\n    msg2.payload = '电梯已到，请出门乘梯'\n}\nreturn [msg1,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 560,
+        "wires": [
+            [
+                "f053100781829743"
+            ],
+            [
+                "f053100781829743"
+            ]
+        ]
+    },
+    {
+        "id": "f053100781829743",
+        "type": "xiaoai-tts",
+        "z": "91e1adde.857a4",
+        "name": "",
+        "xiaoai": "feab9659.d2b5d8",
+        "tts": "",
+        "device": "",
+        "x": 1110,
+        "y": 560,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b58c13944a138bc2",
+        "type": "function",
+        "z": "91e1adde.857a4",
+        "name": "",
+        "func": "if(msg.topic == 'vs1838b/sensor/jvc_ir' && msg.payload == '254')\n{\n    var msg = {}\n}\nelse if(msg.topic == 'binary_sensor.call_elevator' && msg.payload == 'on')\n{\n    var msg = {}\n}\nelse if(msg.topic == 'elevator001' && msg.payload == 'on')\n{\n    var msg = {}\n}\nelse\n{\n    return\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 440,
+        "wires": [
+            [
+                "e332e4a9639f7ff7",
+                "50833ce60da03148"
+            ]
+        ]
+    },
+    {
+        "id": "514affc5.7205",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 1,
+        "legacy": false,
+        "addon": false,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true
+    },
+    {
+        "id": "feab9659.d2b5d8",
+        "type": "xiaoai-tts-configurator",
+        "name": "Love_Sally"
+    }
+]
