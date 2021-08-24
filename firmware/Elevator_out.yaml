@@ -6,7 +6,8 @@ esphome:
   # board_flash_mode: dout
   
 substitutions:
-  ds18b20: GPIO12
+  ds18b20_1: GPIO12
+  ds18b20_2: '0x3D00000D6920BA28'
   button: GPIO4
   led: GPIO14
 
@@ -19,11 +20,11 @@ wifi:
   #   gateway: 192.168.1.1
   #   subnet: 255.255.255.0
   networks:
+    - ssid: !secret wifi_ssid_4
+      password: !secret wifi_passwd_4
+      priority: 0
     - ssid: !secret wifi_ssid_3
       password: !secret wifi_passwd_3
-      priority: 0
-    - ssid: CU_ecd7
-      password: a66cgcy5
       priority: 1
   ap:
     ssid: !secret ap_ssid
@@ -65,13 +66,20 @@ web_server:
 #   client_id: $client_id
 
 # Example configuration entry
+globals:
+  - id: elevator_relay
+    type: int
+    restore_value: yes
+    initial_value: '0'
+
+# Example configuration entry
 dallas:
-  - pin: $ds18b20
+  - pin: $ds18b20_1
 
 # Individual sensors
 sensor:
   - platform: dallas
-    address: 0x3D00000D6920BA28
+    address: $ds18b20_2
     name: "Chip_Temperature"
     unit_of_measurement: °C
 
@@ -82,8 +90,12 @@ switch:
     pin: $button
     id: relay
     on_turn_on:
+    ## 呼叫电梯，存变量
+      - lambda: |-
+          id(elevator_relay) += 1;
       - delay: 0.2s
       - switch.turn_off: relay
+      
 
 binary_sensor:
 ## 电梯按键led反馈
@@ -94,3 +106,34 @@ binary_sensor:
       inverted: True
     name: "Button_led"
     id: led
+    ## led to on，如果变量非空，tts
+    on_press:
+      then:
+        - lambda: |-
+            if (id(elevator_relay) > 0) {
+              id(tts).publish_state("电梯正在上行, 请准备出门");
+            } 
+    ## led to off，如果变量非空，清除变量并tts
+    on_release:
+      then:
+        - lambda: |-
+            if (id(elevator_relay) > 0) {
+              id(elevator_relay) = 0;
+              id(tts).publish_state("电梯已到, 请出门乘梯");
+            } 
+            
+# ##
+#   - platform: template
+#     name: "tts"
+#     lambda: |-
+#       if (id(tts) > 0) {
+#         return true;
+#       } else {
+#         return false;
+#       }
+
+# Example configuration entry
+text_sensor:
+  - platform: template
+    name: "TTS"
+    id: tts
